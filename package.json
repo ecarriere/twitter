@@ -1,0 +1,18 @@
+{
+  "name": "tweettrade",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "EMC",
+  "license": "ISC",
+  "dependencies": {
+    "bower": "^1.7.7",
+    "ejs": "^2.4.1",
+    "express": "^4.13.4",
+    "qs": "^6.1.0",
+    "twit": "^2.2.3"
+  }
+}

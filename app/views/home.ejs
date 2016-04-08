@@ -1,0 +1,77 @@
+<!-- the root element of the view assigned to the TweetList javascript controller-->
+	<div ng-controller="TwitterController">
+
+		<div class="row">
+			<div class="col-lg-12">
+				<h1><img id="twitter-logo" src="/../assets/images/Twitter_logo_white.png">Obtain Tweets</h1>
+			</div>
+		</div>
+
+		<div id="search-container" class="row">
+			<div class="col-lg-3">
+
+				<!-- this form will trigger the getTweets function in the javascript controller on submit -->
+				<form class="input-group" ng-submit="getTweets()" >
+	  			<span class="input-group-addon">@</span>
+
+					<!-- this text input is binded to a variable in the javascript controller -->
+				  <input type="text" class="form-control" placeholder="TwitterDev" ng-model="username">
+
+					<span class="input-group-btn">
+		        <button class="btn btn-default" type="submit">Get Tweets</button>
+		      </span>
+
+				</form>
+   		</div>
+		</div>
+
+		<div class="row clearfix">
+			<div class="col-lg-12">
+
+		    	<div >
+
+		    		<!-- this div will repeat for every tweet object in the array using a template-expanding directive -->
+		    		<div ng-repeat="tweet in tweetsResult" class="tweet-item">
+
+						<h5>{{tweet.text}}</h5>
+						<hr>
+
+		    		</div>
+
+		    	</div>
+
+		  </div>
+  	</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+
+				<!-- this button will trigger the getMoreTweets function in the javascript controller -->
+		  	<button type="button" class="load-more-btn btn btn-default" ng-click="getMoreTweets()">Get More Tweets</button>
+
+	  	</div>
+	  </div>
+
+	</div>
+
+	<!-- Display from Service -->
+
+	<!-- <h2>Adjust tweets</h2>
+
+		<div class="row clearfix">
+			<div class="col-lg-12">
+
+		    	<div >
+
+		    		this div will repeat for every tweet object in the array using a template-expanding directive
+		    		<div ng-repeat="" class="tweet-item">
+
+						<h3>{{tweet.text}}</h3>
+						<hr>
+
+		    		</div>
+
+		    	</div>
+
+		  </div>
+  	</div> -->

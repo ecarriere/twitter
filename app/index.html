@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Trade your Tweets!</title>
+	
+	<!-- Styles -->
+
+ 	<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
+  	
+	<!-- Scripts -->
+  
+	<script type="text/javascript" src="/bower_components/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+	<script type="text/javascript" src="/bower_components/angular/angular.js"></script>
+	<script type="text/javascript" src="/bower_components/angular-route/angular-route.js"></script>
+	<script type="text/javascript" src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
+	<script type="text/javascript" src="/bower_components/angular-resource/angular-resource.js"></script>
+	<script type="text/javascript" src="/bower_components/masonry/dist/masonry.pkgd.js"></script>
+	<script type="text/javascript" src="/bower_components/moment/moment.js"></script>
+  <script type="text/javascript" src="/bower_components/body-parser/test/body-parser.js"></script>
+	<script src="//platform.twitter.com/widgets.js"></script>
+ 	
+	<!-- Controllers -->
+
+	<script type="text/javascript" src="app.js"></script>
+	<script type="text/javascript" src="controllers/twitter.ctrl.js"></script>
+
+  <!-- Services -->
+
+  <script type="text/javascript" src="services/tweets.srv.js"></script>
+
+
+
+
+<body ng-app="tweetTrade">
+
+	<!-- Nav Bar -->
+
+	<nav class="navbar navbar-default" id="menu">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        
+          </button>
+          <a class="navbar-brand" href="/#/">Home</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            
+            <li class="menu-item"><a href="#/login">Login</a></li>
+            <li class="menu-item"><a href="#/signup">Sign Up</a></li>
+          	<li class="menu-item"><a href="#/about">About</a></li>
+          	
+          	</ul>
+        </div>
+      </div>
+    </nav>
+
+	<!-- View -->
+
+    <div class="container">
+    	<div class="row">
+    		<div class="col-md-12">
+
+    		<div ng-view autoscroll="true"></div>
+
+    		</div>
+    	</div>
+    </div>
+
+	<!-- Footer -->
+
+
+
+	<!-- Footer -->
+        
+
+</body>
+</html>
