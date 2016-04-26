@@ -3,6 +3,8 @@ var router = express.Router();
 var Twit = require('twit');
 var config = require('../config/config.js');
 
+
+
 // instantiate Twit module
 var twitter = new Twit(config.twitter);
 

@@ -1,6 +1,6 @@
 tweetTrade.controller('TwitterController', TwitterController);
 
-var bodyParser = require('body-parser')
+
 
 function TwitterController($scope, $resource, $timeout, tweetService){
 
@@ -64,33 +64,46 @@ function TwitterController($scope, $resource, $timeout, tweetService){
         }
 
         $scope.tweetsResult = $scope.tweetsResult.concat(res) 
-        
-
-        JSON.stringify($scope.tweetsResult);
-        JSON.parse($scope.tweetsResult);
-
-        console.log($scope.tweetsResult);
-        
-        // $scope.tweets.get({tweetsResult: $scope.tweetsResult},function(eventDetail){
-        // //on success callback function
-        // console.log(tweetsResult);
-        // console.log(tweetsResult[0].text);
-        // });
 
 
+        // Loop over Results
+        var tweetsTotal = $scope.tweetsResult.length;
+
+        for(var i = 0; i<tweetsTotal ; i++){
+            var totalOrders = [];
+            var order = [];
 
 
-        //tweetService.tweetsBefore = $scope.tweetsResult;
-        //console.log(tweetService.tweetsBefore)
-        
+            console.log($scope.tweetsResult[i].text);
 
+            // Find $ for trading pair
+            var tradingPair = "";
+            // find() $ ; record everything thats followed by this
+
+            // Find LONG or SHORT
+            var type = "";
+            // find()/search() long / short ; record
+
+            // Find Price
+            var price = "";
+            // find() price if numbers followed record
+
+            // Find target (opt)
+            var target = "";
+
+            // Find Stoploss (opt)
+            var stop = "";
+
+        }
+
+      
         // for paging - https://dev.twitter.com/docs/working-with-timelines
         $scope.maxId = res[res.length - 1].id;
 
         // render tweets with widgets.js
         $timeout(function () {
           twttr.widgets.load();
-        }, 30);
+        }, 5);
 
 
 

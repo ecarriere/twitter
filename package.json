@@ -9,6 +9,7 @@
   "author": "EMC",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.15.0",
     "bower": "^1.7.7",
     "ejs": "^2.4.1",
     "express": "^4.13.4",
