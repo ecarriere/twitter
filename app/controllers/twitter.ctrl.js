@@ -63,7 +63,7 @@ function TwitterController($scope, $resource, $timeout, tweetService){
 
         }
 
-        $scope.tweetsResult = $scope.tweetsResult.concat(res) 
+        $scope.tweetsResult = $scope.tweetsResult.concat(res); 
 
 
         // Loop over Results
@@ -77,24 +77,49 @@ function TwitterController($scope, $resource, $timeout, tweetService){
             console.log($scope.tweetsResult[i].text);
 
             // Find $ for trading pair
-            var tradingPair = "";
             // find() $ ; record everything thats followed by this
 
+            var tradingPair = "";
+            if ($scope.tweetsResult[i].text.indexOf('$') != -1) {
+                var indexA = $scope.tweetsResult[i].text.indexOf('$');
+                tradingPair = $scope.tweetsResult[i].text.substr(indexA+1, 6);
+                console.log(tradingPair)
+            }
+            
+
             // Find LONG or SHORT
-            var type = "";
             // find()/search() long / short ; record
 
+            var type = "";
+            if ($scope.tweetsResult[i].text.toLowerCase.indexOf('long') != -1) {
+                type = 'long';
+                console.log(type)
+              } else if ($scope.tweetsResult[i].text.toLowerCase.indexOf('short') != -1) {
+                type = 'short';
+                console.log(type)
+              }
+                
+            
             // Find Price
-            var price = "";
             // find() price if numbers followed record
+
+            var price = "";
+            //remove https portion (which often contains numbers), then find numbers
+            
+            var priceString = 
+
+            //test for numbers
+
+
 
             // Find target (opt)
             var target = "";
 
+
             // Find Stoploss (opt)
             var stop = "";
 
-        }
+            }
 
       
         // for paging - https://dev.twitter.com/docs/working-with-timelines
