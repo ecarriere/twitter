@@ -140,15 +140,6 @@ function TwitterController($scope, $resource, $timeout, tweetService){
               console.log('priceOpen: ' + priceOpen);
               console.log('priceClose: ' + priceClose);
 
-            
-            //remove https portion (which often contains numbers), then find numbers
-            
-            var priceString = ''; 
-
-            //test for numbers
-
-
-
             // Find target (opt)
             var target = "";
 
