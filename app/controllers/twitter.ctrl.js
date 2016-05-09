@@ -91,10 +91,10 @@ function TwitterController($scope, $resource, $timeout, tweetService){
             // find()/search() long / short ; record
 
             var type = "";
-            if ($scope.tweetsResult[i].text.toLowerCase.indexOf('long') != -1) {
+            if ($scope.tweetsResult[i].text.toLowerCase().indexOf('long') != -1) {
                 type = 'long';
                 console.log(type)
-              } else if ($scope.tweetsResult[i].text.toLowerCase.indexOf('short') != -1) {
+              } else if ($scope.tweetsResult[i].text.toLowerCase().indexOf('short') != -1) {
                 type = 'short';
                 console.log(type)
               }
@@ -104,9 +104,46 @@ function TwitterController($scope, $resource, $timeout, tweetService){
             // find() price if numbers followed record
 
             var price = "";
+            var httpFind = $scope.tweetsResult[i].text.indexOf('http');
+            var priceTest = $scope.tweetsResult[i].text.substr(0, httpFind);
+            var priceOpen = "";
+            var priceOpCk = false;
+            var priceClose = "";
+
+            for (var a = 0; a < priceTest.length; a++){
+                var findNum = parseInt(priceTest[a]);
+
+                if (isNaN(findNum) === false) {
+                  price += findNum
+                  if (priceTest[a+1] === '.') {
+                    price += '.' ;
+                    a++;
+                    } else if (
+                         priceTest[a+1] === ','
+                      || priceTest[a+1] === '-'
+                      || priceTest[a+1] === ')'
+                    ) {
+                       if (priceOpCk === false) {
+                          priceOpen = price;
+                          price = "";
+                          priceOpCk = true;
+                          a++;
+                       } else {
+                            priceClose = price;
+                            price = "";
+                            priceOpCk = false;
+                            break
+                    }
+                  }
+                }
+              }
+              console.log('priceOpen: ' + priceOpen);
+              console.log('priceClose: ' + priceClose);
+
+            
             //remove https portion (which often contains numbers), then find numbers
             
-            var priceString = 
+            var priceString = ''; 
 
             //test for numbers
 
