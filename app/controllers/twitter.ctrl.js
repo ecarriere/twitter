@@ -14,6 +14,7 @@ function TwitterController($scope, $resource, $timeout, tweetService){
 
       // set a default username value
       $scope.username = "growthaces";
+      //$scope.username = "tweettradetest";
       
       // empty tweet model
       $scope.tweetsResult = [];
@@ -81,10 +82,21 @@ function TwitterController($scope, $resource, $timeout, tweetService){
 
             var tradingPair = "";
             if ($scope.tweetsResult[i].text.indexOf('$') != -1) {
-                var indexA = $scope.tweetsResult[i].text.indexOf('$');
-                tradingPair = $scope.tweetsResult[i].text.substr(indexA+1, 6);
-                console.log(tradingPair)
-            }
+              //find $ then loop over next characters max 6 times
+                  var indexA = $scope.tweetsResult[i].text.indexOf('$');
+                  for (var t=0; t<7; t++){
+                    if ($scope.tweetsResult[i].text.charAt(indexA+1) == ' '
+                      ||$scope.tweetsResult[i].text.charAt(indexA+1) == ':'
+                      ){
+                    //break at space or :
+                      break
+                    } else {
+                        tradingPair += $scope.tweetsResult[i].text.charAt(indexA+1);
+                        indexA++
+                }
+              }
+            console.log(tradingPair)
+          }
             
 
             // Find LONG or SHORT
@@ -100,45 +112,100 @@ function TwitterController($scope, $resource, $timeout, tweetService){
               }
                 
             
-            // Find Price
-            // find() price if numbers followed record
+          // Find Price
 
-            var price = "";
+
+          //remove http string which often contains numbers
             var httpFind = $scope.tweetsResult[i].text.indexOf('http');
             var priceTest = $scope.tweetsResult[i].text.substr(0, httpFind);
-            var priceOpen = "";
-            var priceOpCk = false;
-            var priceClose = "";
 
-            for (var a = 0; a < priceTest.length; a++){
-                var findNum = parseInt(priceTest[a]);
-
-                if (isNaN(findNum) === false) {
-                  price += findNum
-                  if (priceTest[a+1] === '.') {
-                    price += '.' ;
-                    a++;
-                    } else if (
-                         priceTest[a+1] === ','
-                      || priceTest[a+1] === '-'
-                      || priceTest[a+1] === ')'
-                    ) {
-                       if (priceOpCk === false) {
-                          priceOpen = price;
-                          price = "";
-                          priceOpCk = true;
-                          a++;
-                       } else {
-                            priceClose = price;
-                            price = "";
-                            priceOpCk = false;
-                            break
-                    }
-                  }
-                }
+          //isolate price, target and stoploss from rest of tweet  
+            var priceId = $scope.tweetsResult[i].text.toLowerCase().indexOf('price');
+            // if the word price is not found we grab the number following the word 'at'
+              if (priceId == -1) {
+                priceId = $scope.tweetsResult[i].text.toLowerCase().indexOf('at');
+              } else {
+            // if no 'price' or 'at' use index 0  
+                  priceId = 0;
               }
-              console.log('priceOpen: ' + priceOpen);
-              console.log('priceClose: ' + priceClose);
+
+            //if stoploss or target are not present in tweet we set equal to 140
+            //i.e. index of last character in the string
+
+            var targetId = $scope.tweetsResult[i].text.toLowerCase().indexOf('target');
+              if (targetId == -1) {
+                targetId = 140;
+              }
+            var stoplossId = $scope.tweetsResult[i].text.toLowerCase().indexOf('stoploss');
+              if (stoplossId == -1) {
+                stoplossId = 140;
+              }
+
+            // only grab text relevant to each value
+            var priceSub = $scope.tweetsResult[i].text.substr(priceId, (targetId - priceId));
+            var targetSub = $scope.tweetsResult[i].text.substr(targetId, (stoplossId - targetId));
+            var stoplossSub = $scope.tweetsResult[i].text.substr(stoplossId);
+
+            price = grabPrice(priceSub);
+            if (targetId != -1){
+              target = grabPrice(targetSub);
+            }
+            if (stoplossId != -1){
+              stoploss = grabPrice(stoplossSub);
+            }            
+            //only set value for target and stoploss if you find those words in the tweet
+
+// Old            var priceOpen = "";
+// Old            var priceClose = "";
+// Old            var priceOpCk = false;
+
+            function grabPrice (sub) {
+              var priceStr = "";
+                for (var b = 0; b < sub.length; b++){
+                    if (sub[b].match(/[0-9]/)){
+                      priceStr += sub[b];
+                      if (sub[b+1] === '.') {
+                        priceStr += '.' ;
+                        b++;
+                        } else if (sub[b+1] === ' '
+                                   || sub[b+1] === ','
+                                   || sub[b+1] === '-'
+                                   || sub[b+1] === ')' )
+                                  {break}
+                                }
+                              }
+              return priceStr
+                            }
+
+              console.log('price:' + price);
+              console.log('target:' + target);
+              console.log('stoploss:' + stoploss);
+
+
+  // Old Price Open //      priceTest[a+1] === ','
+  // Price Close    //   || priceTest[a+1] === '-'
+  // Test           //   || priceTest[a+1] === ')'
+  // Works for      //  ) {
+  // GrowthAces     //    if (priceOpCk === false) {
+                    //       priceOpen = price;
+                    //       price = "";
+                    //       priceOpCk = true;
+                    //       a++;
+                    //    } else {
+                    //         priceClose = price;
+                    //         price = "";
+                    //         priceOpCk = false;
+                    //         break
+
+              //       }
+              //     }
+              //   }
+              // }
+              // console.log('priceOpen: ' + priceOpen);
+              // console.log('priceClose: ' + priceClose);
+
+
+
 
             // Find target (opt)
             var target = "";
